@@ -1,0 +1,13 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "TableTennisExercises",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "Tennis",
+  "start_url": "https://rchernyshov.github.io/TennisApp.github.io/",
+  "theme_color": "#ffffff",
+  "description": "Приложение для выполнения упражнений для настольного тенниса",
+  "lang": "ru"
+}
