@@ -359,7 +359,7 @@
 
             startButton.addEventListener("click", () => {
                 startButton.style.display = "none";
-                stopButton.style.display = "block";
+                stopButton.style.display = "flex";
 
                 timer = setInterval(() => {
                     milliseconds++;
@@ -380,7 +380,7 @@
             });
 
             stopButton.addEventListener("click", () => {
-                startButton.style.display = "block";
+                startButton.style.display = "flex";
                 stopButton.style.display = "none";
 
                 clearInterval(timer);
@@ -396,7 +396,7 @@
                 lbl_result.textContent = "00:00:00.00";
 
                 stopButton.style.display = "none";
-                startButton.style.display = "block";
+                startButton.style.display = "flex";
 
                 if (timer !== null) {
                     clearInterval(timer);
