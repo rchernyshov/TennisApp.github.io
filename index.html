@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body style="height:100%; width:100%">
-    <div id="header" style="position:absolute; top:0px; left:0px; height:200px; right:0px;overflow:hidden;">
+<body style="height:100vh; width:100%; display:flex; flex-direction:column">
+    <div id="header">
         <div class="header">
             Настольный теннис
         </div>
 
         <div class="picker-container">
-            <div>Выберите упражнение:</div>
+            <div style="margin-bottom:1%;">Выберите упражнение:</div>
             <select class="picker" id="exercisePicker">
                 <option value="0">Перемещения</option>
                 <option value="1">Имитации</option>
@@ -24,7 +24,7 @@
             </select>
         </div>
     </div>
-    <div id="content" style="position:absolute; top:18%; bottom:15%; left:0px; right:0px; overflow:auto;">
+    <div id="content" style="overflow:auto;">
         <div id="collectionView" class="picker-container">
             <!-- icon name description -->
             <div class="trainingContainer">
@@ -45,7 +45,7 @@
             </div>
         </div>
     </div>
-    <div id="footer" style="position:absolute; bottom:0px; left:0px; right:0px; overflow:hidden;">
+    <div id="footer">
         <div class="timer-container">
             <div class="timer">
                 <label id="lbl_result">00:00:00.00</label>
