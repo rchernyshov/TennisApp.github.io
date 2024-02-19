@@ -134,34 +134,41 @@ document.addEventListener('DOMContentLoaded', () => {
     let timer;
     let hours = 0, mins = 0, secs = 0, milliseconds = 0;
 
-    startButton.addEventListener("click", () => {
-        startButton.style.display = "none";
-        stopButton.style.display = "flex";
+    let startTime;
+    let isRunning = false;
 
-        timer = setInterval(() => {
-            milliseconds++;
-            if (milliseconds >= 1000) {
-                secs++;
-                milliseconds = 0;
+    startButton.addEventListener("click", () => {
+        if (!isRunning) {
+            startButton.style.display = "none";
+            stopButton.style.display = "flex";
+            isRunning = true;
+
+            startTime = Date.now();
+
+            function updateTimer() {
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - startTime;
+
+                milliseconds = elapsedTime % 1000;
+                secs = Math.floor(elapsedTime / 1000) % 60;
+                mins = Math.floor(elapsedTime / (1000 * 60)) % 60;
+                hours = Math.floor(elapsedTime / (1000 * 60 * 60));
+
+                lbl_result.textContent = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${String(milliseconds).slice(0, 2).padStart(2, '0')}`;
+
+                if (isRunning) {
+                    requestAnimationFrame(updateTimer);
+                }
             }
-            if (secs == 59) {
-                mins++;
-                secs = 0;
-            }
-            if (mins == 59) {
-                hours++;
-                mins = 0;
-            }
-            lbl_result.textContent = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${String(milliseconds / 10).padStart(2, '0')}`;
-        }, 1);
+
+            updateTimer();
+        }
     });
 
     stopButton.addEventListener("click", () => {
+        isRunning = false;
         startButton.style.display = "flex";
         stopButton.style.display = "none";
-
-        clearInterval(timer);
-        timer = null;
     });
 
     resetButton.addEventListener("click", () => {
@@ -179,7 +186,10 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(timer);
             timer = null;
         }
+
+        isRunning = false;
     });
+
 
     initExerciseList();
     updateCollectionView(0);
