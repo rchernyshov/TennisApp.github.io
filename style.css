@@ -3,6 +3,7 @@ body {
     background-color: #FFFFFF;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 .header {
@@ -12,6 +13,7 @@ body {
     text-align: center;
     color: #FFFFFF;
     font-size: 24px;
+    overflow: hidden;
 }
 
 .picker-container {
@@ -55,6 +57,7 @@ body {
     padding: 20px;
     margin: 10px;
     bottom: 0;
+    overflow: hidden;
 }
 
 .timer {
