@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let hours = 0, mins = 0, secs = 0, milliseconds = 0;
 
     let startTime;
+    let pausedTime = 0; // Добавлено для хранения времени при остановке
     let isRunning = false;
 
     startButton.addEventListener("click", () => {
@@ -143,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             stopButton.style.display = "flex";
             isRunning = true;
 
-            startTime = Date.now();
+            startTime = Date.now() - pausedTime;
 
             function updateTimer() {
                 const currentTime = Date.now();
@@ -169,25 +170,29 @@ document.addEventListener('DOMContentLoaded', () => {
         isRunning = false;
         startButton.style.display = "flex";
         stopButton.style.display = "none";
+
+        pausedTime = Date.now() - startTime;
     });
 
     resetButton.addEventListener("click", () => {
+
+        isRunning = false;
+
+        lbl_result.textContent = "00:00:00.00";
+
         hours = 0;
         mins = 0;
         secs = 0;
         milliseconds = 0;
 
-        lbl_result.textContent = "00:00:00.00";
-
         stopButton.style.display = "none";
         startButton.style.display = "flex";
 
-        if (timer !== null) {
-            clearInterval(timer);
-            timer = null;
-        }
+        clearInterval(timer);
+        timer = null;
 
-        isRunning = false;
+        pausedTime = 0;
+
     });
 
 
