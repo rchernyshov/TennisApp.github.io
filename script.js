@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let startTime;
     let pausedTime = 0; // Добавлено для хранения времени при остановке
     let isRunning = false;
+    let animationId;
 
     startButton.addEventListener("click", () => {
         if (!isRunning) {
@@ -158,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 lbl_result.textContent = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${String(milliseconds).slice(0, 2).padStart(2, '0')}`;
 
                 if (isRunning) {
-                    requestAnimationFrame(updateTimer);
+                    animationId = requestAnimationFrame(updateTimer);
                 }
             }
 
@@ -175,6 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     resetButton.addEventListener("click", () => {
+        cancelAnimationFrame(animationId);
+        animationId = undefined;
 
         isRunning = false;
 
