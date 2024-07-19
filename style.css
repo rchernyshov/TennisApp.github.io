@@ -57,7 +57,6 @@ body {
     height: 50px;
     border-radius: 50%;
     margin: 0 10px;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,29 +65,27 @@ body {
 .timer button.stop {
     background-color: Red;
     display: none;
-
-    align-items: center;
-    justify-content: center;
 }
 
 .timer button.reset {
     background-color: DarkGray;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .trainingContainer {
     background-color: #EEEEEE;
     margin-bottom: 20px;
     padding: 10px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     border-radius: 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+.trainingContainer:hover {
+    cursor: pointer;
+    background-color: #dcdcdc;
 }
 
 .trainingIcon {
@@ -99,6 +96,14 @@ body {
 }
 
 .trainingIcon img {
+    max-width: 100%;
+    /* Начальный размер */
+    max-height: 100px;
+    /* Начальный размер */
+    transition: all 0.3s ease-in-out;
+}
+
+.trainingContainer.expanded .trainingIcon img {
     max-width: 100%;
     max-height: 300px;
 }
@@ -111,6 +116,15 @@ body {
 
 .trainingDescription {
     color: #6b6b6b;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    max-height: 1em;
+    /* Начальная высота для показа только нескольких строк */
+}
+
+.trainingContainer.expanded .trainingDescription {
+    max-height: 1000px;
+    /* Высота для показа полного описания */
 }
 
 .appTop {

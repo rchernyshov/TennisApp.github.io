@@ -87,111 +87,80 @@ document.addEventListener('DOMContentLoaded', () => {
         ExerciseList[2].push(new Exercise("icons/Н21.jpg", "Набивание мяча двумя руками, перехватывая ракетку с одной руки в другую", "30 секунд."));
     }
 
+    function updateTrainingList(index) {
+        collectionView.innerHTML = '';
+        ExerciseList[index].forEach(exercise => {
+            let container = document.createElement("div");
+            container.classList.add("trainingContainer");
 
-    function updateCollectionView(selectedIndex) {
-        collectionView.innerHTML = "";
-
-        ExerciseList[selectedIndex].forEach(exercise => {
-            const trainingContainer = document.createElement('div');
-            trainingContainer.classList.add('trainingContainer');
-
-            const trainingIcon = document.createElement('div');
-            trainingIcon.classList.add('trainingIcon');
-
-            const img = document.createElement('img');
+            let icon = document.createElement("div");
+            icon.classList.add("trainingIcon");
+            let img = document.createElement("img");
             img.src = exercise.iconPath;
-            img.alt = 'Иконка упражнения';
+            icon.appendChild(img);
+            container.appendChild(icon);
 
-            const trainingName = document.createElement('div');
-            trainingName.classList.add('trainingName');
-            trainingName.textContent = exercise.name;
+            let name = document.createElement("div");
+            name.classList.add("trainingName");
+            name.innerText = exercise.name;
+            container.appendChild(name);
 
-            const trainingDescription = document.createElement('div');
-            trainingDescription.classList.add('trainingDescription');
-            trainingDescription.textContent = exercise.description;
+            let description = document.createElement("div");
+            description.classList.add("trainingDescription");
+            description.innerText = exercise.description;
+            container.appendChild(description);
 
-            trainingIcon.appendChild(img);
-            trainingContainer.appendChild(trainingIcon);
-            trainingContainer.appendChild(trainingName);
-            trainingContainer.appendChild(trainingDescription);
-            collectionView.appendChild(trainingContainer);
+            container.addEventListener('click', () => {
+                container.classList.toggle('expanded');
+            });
+
+            collectionView.appendChild(container);
         });
     }
 
+    initExerciseList();
+    updateTrainingList(exercisePicker.value);
 
     exercisePicker.addEventListener('change', () => {
-        const selectedIndex = parseInt(exercisePicker.value, 10);
-        updateCollectionView(selectedIndex);
+        updateTrainingList(exercisePicker.value);
     });
 
-    let timer;
-    let hours = 0, mins = 0, secs = 0, milliseconds = 0;
+    let startTime, updatedTime, difference, timerInterval;
 
-    let startTime;
-    let pausedTime = 0;
-    let isRunning = false;
-    let animationId;
-
-    startButton.addEventListener("click", () => {
-        if (!isRunning) {
-            startButton.style.display = "none";
-            stopButton.style.display = "flex";
-            isRunning = true;
-
-            startTime = Date.now() - pausedTime;
-
-            function updateTimer() {
-                const currentTime = Date.now();
-                const elapsedTime = currentTime - startTime;
-
-                milliseconds = elapsedTime % 1000;
-                secs = Math.floor(elapsedTime / 1000) % 60;
-                mins = Math.floor(elapsedTime / (1000 * 60)) % 60;
-                hours = Math.floor(elapsedTime / (1000 * 60 * 60));
-
-                lbl_result.textContent = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${String(milliseconds).slice(0, 2).padStart(2, '0')}`;
-
-                if (isRunning) {
-                    animationId = requestAnimationFrame(updateTimer);
-                }
-            }
-
-            updateTimer();
-        }
+    startButton.addEventListener("click", function () {
+        clearInterval(timerInterval);
+        startTime = new Date().getTime();
+        timerInterval = setInterval(updateTimer, 10);
+        startButton.style.display = "none";
+        stopButton.style.display = "block";
     });
 
-    stopButton.addEventListener("click", () => {
-        isRunning = false;
-        startButton.style.display = "flex";
+    stopButton.addEventListener("click", function () {
+        clearInterval(timerInterval);
+        startButton.style.display = "block";
         stopButton.style.display = "none";
-
-        pausedTime = Date.now() - startTime;
     });
 
-    resetButton.addEventListener("click", () => {
-        cancelAnimationFrame(animationId);
-        animationId = undefined;
-
-        isRunning = false;
-
-        lbl_result.textContent = "00:00:00.00";
-
-        hours = 0;
-        mins = 0;
-        secs = 0;
-        milliseconds = 0;
-
+    resetButton.addEventListener("click", function () {
+        clearInterval(timerInterval);
+        lbl_result.innerHTML = "00:00:00.00";
+        startButton.style.display = "block";
         stopButton.style.display = "none";
-        startButton.style.display = "flex";
-
-        clearInterval(timer);
-        timer = null;
-
-        pausedTime = 0;
-
     });
 
+    function updateTimer() {
+        updatedTime = new Date().getTime();
+        difference = updatedTime - startTime;
 
-    initExerciseList();
-    updateCollectionView(0);
+        let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        let milliseconds = Math.floor((difference % 1000) / 10);
+
+        lbl_result.innerHTML =
+            (hours < 10 ? "0" + hours : hours) + ":" +
+            (minutes < 10 ? "0" + minutes : minutes) + ":" +
+            (seconds < 10 ? "0" + seconds : seconds) + "." +
+            (milliseconds < 10 ? "0" + milliseconds : milliseconds);
+    }
 });
