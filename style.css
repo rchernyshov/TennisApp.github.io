@@ -28,6 +28,29 @@ body {
     border-radius: 5px;
 }
 
+.item {
+    background-color: #EEEEEE;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+}
+
+.item img {
+    height: 50px;
+    width: 50px;
+    float: left;
+}
+
+.item-info {
+    margin-left: 60px;
+}
+
+.item-info h2 {
+    font-weight: bold;
+    font-size: 18px;
+    color: black;
+}
+
 .timer-container {
     background-color: #DDDDDD;
     border-radius: 20px;
@@ -57,6 +80,7 @@ body {
     height: 50px;
     border-radius: 50%;
     margin: 0 10px;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,10 +89,17 @@ body {
 .timer button.stop {
     background-color: Red;
     display: none;
+
+    align-items: center;
+    justify-content: center;
 }
 
 .timer button.reset {
     background-color: DarkGray;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .trainingContainer {
@@ -76,36 +107,21 @@ body {
     margin-bottom: 20px;
     padding: 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    /* Переключение на строковую компоновку */
     align-items: center;
     text-align: center;
     border-radius: 15px;
     transition: all 0.3s ease-in-out;
 }
 
+.trainingContainer.expanded {
+    flex-direction: column;
+}
+
 .trainingContainer:hover {
     cursor: pointer;
     background-color: #dcdcdc;
-}
-
-.trainingIcon {
-    margin-bottom: 10px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.trainingIcon img {
-    max-width: 100%;
-    /* Начальный размер */
-    max-height: 100px;
-    /* Начальный размер */
-    transition: all 0.3s ease-in-out;
-}
-
-.trainingContainer.expanded .trainingIcon img {
-    max-width: 100%;
-    max-height: 300px;
 }
 
 .trainingName {
@@ -119,12 +135,66 @@ body {
     overflow: hidden;
     transition: max-height 0.3s ease-in-out;
     max-height: 1em;
-    /* Начальная высота для показа только нескольких строк */
 }
 
 .trainingContainer.expanded .trainingDescription {
     max-height: 1000px;
     /* Высота для показа полного описания */
+}
+
+.trainingIcon {
+    margin-right: 10px;
+    width: 64px;
+    display: flex;
+    justify-content: center;
+}
+
+.trainingIcon img {
+    width: 50px;
+    transition: all 0.3s ease-in-out;
+}
+
+.trainingContainer.expanded .trainingIcon img {
+    width: 100%;
+    max-height: 300px;
+    /* Увеличение размера иконки при разворачивании, но ограничение высоты */
+}
+
+.left {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.trainingContainer.expanded .left-top {
+    width: 100%;
+    max-height: 300px;
+    margin-bottom: 10px;
+    /* Увеличение размера иконки при разворачивании, но ограничение высоты */
+}
+
+.left-top,
+.left-bottom {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-right {
+    flex: 1;
+    text-align: left
+}
+
+.bottom-right {
+    flex: 1;
+    text-align: left
 }
 
 .appTop {
