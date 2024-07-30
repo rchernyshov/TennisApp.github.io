@@ -145,14 +145,20 @@ body {
 .trainingDescription {
     color: #6b6b6b;
     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box; /* Добавляем для поддержки многострочного обрезания текста */
+    -webkit-line-clamp: 2; /* Количество видимых строк, перед показом троеточия */
+    -webkit-box-orient: vertical; /* Ориентация коробки */
     transition: max-height 0.5s ease-in-out;
-    max-height: 3em;
+    max-height: 3.5em; /* Регулируем высоту для соответствия количеству строк */
     text-align: left;
     grid-area: description;
 }
 
 .trainingContainer.expanded .trainingDescription {
     max-height: 1000px;
+    -webkit-line-clamp: unset; /* Отменяем line-clamp для полного отображения текста */
+    display: block; /* Возвращаем нормальный блоковый контекст */
 }
 
 .trainingIcon {
